@@ -1,0 +1,60 @@
+<% layout('layouts/boilerplate') %>
+
+<h1 class="text-center">Game</h1>
+<h2 class="text-center">Turn:<%= game.turn %></h2>
+<div class="d-flex align-items-center vh-100">
+    
+    <div class="container  text-center mt-3 ">
+        <div class="row mb-3" >
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/1?_method=PUT" method="post">
+                    <button class="btn btn-primary "<%= game.board.pol1 === "N" ? "" : 'disabled' %>><%= game.board.pol1 %></button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/2?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol2 === "N" ? "" : 'disabled' %>><%= game.board.pol2 %></button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/3?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol3 === "N" ? "" : 'disabled' %>><%= game.board.pol3 %></button>
+                </form>
+            </div>
+        </div>
+        <div class="row mb-3" >
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/4?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol4 === "N" ? "" : 'disabled' %>><%= game.board.pol4 %></button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/5?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol5 === "N" ? "" : 'disabled' %>><%= game.board.pol5 %></button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/6?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol6 === "N" ? "" : 'disabled' %>><%= game.board.pol6 %></button>
+                </form>
+            </div>
+        </div>
+        <div class="row mb-3" >
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/7?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol7 === "N" ? "" : 'disabled' %>><%= game.board.pol7 %></button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/8?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol8 === "N" ? "" : 'disabled' %>><%= game.board.pol8 %></button>
+                </form>
+            </div>
+            <div class="col">
+                <form action="/game/<%= game._id %>/pol/9?_method=PUT" method="post">
+                    <button class="btn btn-primary " <%= game.board.pol9 === "N" ? "" : 'disabled' %>><%= game.board.pol9 %></button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
