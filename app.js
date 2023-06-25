@@ -41,7 +41,9 @@ const checkIfWin =  (game) =>{
         (board.pol2 === board.pol5 && board.pol2 ===  board.pol8 && board.pol5 === board.pol8 && board.pol2 !=='N')||
         (board.pol3 === board.pol6 && board.pol3 ===  board.pol9 && board.pol6 === board.pol9 && board.pol3 !=='N')){
         return true;
-    }
+    }else if( board.pol1 !== "N" && board.pol2 !== "N" && board.pol3 !== "N" && board.pol4 !== "N" && board.pol5 !== "N" && board.pol6 !== "N" && board.pol7 !== "N" && board.pol8 !== "N" && board.pol9 !== "N"){
+        return true;    
+    } 
     return false;
 };
 
@@ -51,12 +53,18 @@ app.get('/',(req,res)=>{
     res.render('home')
 })
 
-app.get('/game',(req,res)=>{
+app.get('/game', async (req,res)=>{
+    const game = await Game.find({})
+
+    if(game[0]){
+        console.log(game);
+        res.redirect(`/game/${game[0]._id}`)
+    }
     res.render('gameStart');
 })
 
 app.post('/game',async (req,res)=>{
-    Game.deleteMany({});
+    await Game.deleteMany({});
     const game = new Game({player1:"",player2:"",board:{pol1:"N",pol2:"N",pol3:"N",pol4:"N",pol5:"N", pol6:"N", pol7:"N", pol8:"N", pol9:"N"},winner:"none",turn:"O"})
     await game.save();
     console.log(game._id);
@@ -82,6 +90,7 @@ app.put('/game/:id/pol/:number',async(req,res)=>{
         const updatedGame = await Game.findByIdAndUpdate(id,{board:newBoard,turn:"X"});
         //console.log(checkIfWin(game));
         if( checkIfWin(game)){
+            await Game.deleteMany({});
             res.render('win',{game});
         }else{
             res.redirect(`/game/${id}`);
@@ -92,6 +101,7 @@ app.put('/game/:id/pol/:number',async(req,res)=>{
         const updatedGame = await Game.findByIdAndUpdate(id,{board:newBoard,turn:"O"});
         //console.log("Kolej krzyzyka");
         if( checkIfWin(game)){
+            await  Game.deleteMany({});
             res.render('win',{game})
         }else{
             res.redirect(`/game/${id}`);
