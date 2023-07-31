@@ -4,6 +4,11 @@ const methodOverride = require('method-override');
 const path = require('path');
 const ejsMate = require('ejs-mate');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const sessionConfig = {
+     secret:'secret',
+     resave: true,
+     saveUninitialized:true}
 
 const Game = require('./models/game');
 
@@ -25,6 +30,8 @@ async function main() {
 app.use(express.urlencoded({extended:true}));
 app.use(methodOverride('_method'));
 app.engine('ejs',ejsMate);
+
+app.use(session(sessionConfig));
 
 app.set('views', path.join(__dirname,'views'));
 app.set('view engine','ejs');
@@ -57,10 +64,13 @@ app.get('/game', async (req,res)=>{
     const game = await Game.find({})
 
     if(game[0]){
+        req.session.game = game[0];
+        console.log(req.session.game);
         console.log(game);
         res.redirect(`/game/${game[0]._id}`)
-    }
+    }else{
     res.render('gameStart');
+    }
 })
 
 app.post('/game',async (req,res)=>{
